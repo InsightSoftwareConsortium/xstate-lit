@@ -1,25 +1,34 @@
-import { ContextConsumer } from '@lit-labs/context';
-import { ReactiveController, ReactiveElement } from 'lit';
-import { InterpreterFrom, Subscribable } from 'xstate';
-import { hasiContext, HasiMachine } from '../state/hasi.machine';
-import { SelectorController } from './select-controller';
+import { ContextConsumer } from "@lit-labs/context";
+import { ReactiveController, ReactiveElement } from "lit";
+import { AnyStateMachine, InterpreterFrom, Subscribable } from "xstate";
+import { SelectorController } from "./select-controller";
 
 const defaultCompare = (a: any, b: any) => a === b;
 
-type HasiService = InterpreterFrom<HasiMachine>;
 export class SelectState<
+  TMachine extends AnyStateMachine,
+  TContext extends {
+    __context__: { service: InterpreterFrom<TMachine> };
+  },
   T,
-  TEmitted = HasiService extends Subscribable<infer Emitted> ? Emitted : never
+  TEmitted = InterpreterFrom<TMachine> extends Subscribable<infer Emitted>
+    ? Emitted
+    : never
 > implements ReactiveController
 {
-  private serviceContext: ContextConsumer<typeof hasiContext, ReactiveElement>;
-  private selectorController?: SelectorController<HasiService, T, TEmitted>;
+  private serviceContext: ContextConsumer<TContext, ReactiveElement>;
+  private selectorController?: SelectorController<
+    InterpreterFrom<TMachine>,
+    T,
+    TEmitted
+  >;
   private host: ReactiveElement;
 
   private selector: (emitted: TEmitted) => T;
   compare: (a: T, b: T) => boolean = defaultCompare; // is current value same as old value?
 
   constructor(
+    context: TContext,
     host: ReactiveElement,
     selector: (emitted: TEmitted) => T,
     compare: (a: T, b: T) => boolean = defaultCompare
@@ -27,7 +36,7 @@ export class SelectState<
     (this.host = host).addController(this);
     this.serviceContext = new ContextConsumer(
       this.host,
-      hasiContext,
+      context,
       undefined,
       true
     );
@@ -61,15 +70,20 @@ export class SelectState<
 
 export function connectState<
   T,
-  TEmitted = InterpreterFrom<HasiMachine> extends Subscribable<infer Emitted>
+  TMachine extends AnyStateMachine,
+  TContext extends {
+    __context__: { service: InterpreterFrom<TMachine> };
+  },
+  TEmitted = InterpreterFrom<TMachine> extends Subscribable<infer Emitted>
     ? Emitted
     : never
 >(
+  context: TContext,
   host: ReactiveElement,
   selector: (emitted: TEmitted) => T,
   compare: (a: T, b: T) => boolean = defaultCompare
 ) {
-  return new SelectState(host, selector, compare);
+  return new SelectState(context, host, selector, compare);
 }
 
 export const compareArrays = (a: unknown[], b: unknown[]) =>

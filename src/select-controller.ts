@@ -1,20 +1,10 @@
-import { ReactiveController, ReactiveControllerHost } from 'lit';
-import { ActorRef, Subscribable, Subscription } from 'xstate';
-
-function isActorWithState<T extends ActorRef<any>>(
-  actorRef: T
-): actorRef is T & { state: any } {
-  return 'state' in actorRef;
-}
+import { ReactiveController, ReactiveControllerHost } from "lit";
+import { ActorRef, Subscribable, Subscription } from "xstate";
 
 export function getSnapshot<TEmitted>(
   actorRef: ActorRef<any, TEmitted>
 ): TEmitted | undefined {
-  return 'getSnapshot' in actorRef
-    ? actorRef.getSnapshot()
-    : isActorWithState(actorRef)
-    ? actorRef.state
-    : undefined;
+  return actorRef.getSnapshot();
 }
 
 const defaultCompare = (a: any, b: any) => a === b;
