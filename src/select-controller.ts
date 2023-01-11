@@ -1,5 +1,5 @@
-import { ReactiveController, ReactiveControllerHost } from "lit";
-import { ActorRef, Subscribable, Subscription } from "xstate";
+import { ReactiveController, ReactiveControllerHost } from 'lit';
+import { ActorRef, Subscribable, Subscription } from 'xstate';
 
 export function getSnapshot<TEmitted>(
   actorRef: ActorRef<any, TEmitted>

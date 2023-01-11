@@ -1,9 +1,10 @@
-import { ContextConsumer } from "@lit-labs/context";
-import { ReactiveController, ReactiveElement } from "lit";
-import { AnyStateMachine, InterpreterFrom, Subscribable } from "xstate";
-import { SelectorController } from "./select-controller";
+import { ContextConsumer } from '@lit-labs/context';
+import { ReactiveController, ReactiveElement } from 'lit';
+import { AnyStateMachine, InterpreterFrom, Subscribable } from 'xstate';
+import { SelectorController } from './select-controller';
+import fastDeepEqual from 'fast-deep-equal';
 
-const defaultCompare = (a: any, b: any) => a === b;
+const defaultCompare = fastDeepEqual;
 
 export class SelectState<
   TMachine extends AnyStateMachine,
