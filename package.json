@@ -8,12 +8,20 @@
   },
   "keywords": [],
   "author": "",
-  "devDependencies": {
-    "semantic-release": "^20.0.2"
-  },
   "release": {
     "branches": [
       "main"
     ]
+  },
+  "devDependencies": {
+    "@lit-labs/context": "^0.2.0",
+    "lit": "^2.6.0",
+    "semantic-release": "^20.0.2",
+    "xstate": "^4.35.2"
+  },
+  "peerDependencies": {
+    "@lit-labs/context": "^0.2.0",
+    "lit": "^2.6.0",
+    "xstate": "^4.35.2"
   }
 }
