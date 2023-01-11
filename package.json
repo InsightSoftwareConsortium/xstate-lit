@@ -10,5 +10,10 @@
   "author": "",
   "devDependencies": {
     "semantic-release": "^20.0.2"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
   }
 }
