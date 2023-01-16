@@ -1,28 +1,28 @@
 import { ContextConsumer } from '@lit-labs/context';
 import { ReactiveController, ReactiveElement } from 'lit';
-import { AnyStateMachine, InterpreterFrom, Subscribable } from 'xstate';
+import { ActorRef } from 'xstate';
 import { SelectorController } from './select-controller';
 import fastDeepEqual from 'fast-deep-equal';
 
 const defaultCompare = fastDeepEqual;
 
 export class SelectState<
-  TMachine extends AnyStateMachine,
-  TContext extends {
-    __context__: { service: InterpreterFrom<TMachine> };
-  },
   T,
-  TEmitted = InterpreterFrom<TMachine> extends Subscribable<infer Emitted>
+  TActor extends ActorRef<any, TEmitted>,
+  TContext extends {
+    __context__: { service: ActorRef<any, any> };
+  },
+  TEmitted = TContext extends {
+    __context__: {
+      service: ActorRef<any, infer Emitted>;
+    };
+  }
     ? Emitted
     : never
 > implements ReactiveController
 {
   private serviceContext: ContextConsumer<TContext, ReactiveElement>;
-  private selectorController?: SelectorController<
-    InterpreterFrom<TMachine>,
-    T,
-    TEmitted
-  >;
+  private selectorController?: SelectorController<TActor, T, TEmitted>;
   private host: ReactiveElement;
 
   private selector: (emitted: TEmitted) => T;
@@ -71,11 +71,14 @@ export class SelectState<
 
 export function connectState<
   T,
-  TMachine extends AnyStateMachine,
   TContext extends {
-    __context__: { service: InterpreterFrom<TMachine> };
+    __context__: { service: ActorRef<any, any> };
   },
-  TEmitted = InterpreterFrom<TMachine> extends Subscribable<infer Emitted>
+  TEmitted = TContext extends {
+    __context__: {
+      service: ActorRef<any, infer Emitted>;
+    };
+  }
     ? Emitted
     : never
 >(
