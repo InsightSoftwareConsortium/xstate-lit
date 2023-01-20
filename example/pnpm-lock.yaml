@@ -1,12 +1,16 @@
 lockfileVersion: 5.4
 
 specifiers:
+  fast-deep-equal: ^3.1.3
   lit: ^2.4.1
   typescript: ^4.9.3
   vite: ^4.0.0
+  xstate: ^4.35.2
 
 dependencies:
+  fast-deep-equal: 3.1.3
   lit: 2.6.1
+  xstate: 4.35.2
 
 devDependencies:
   typescript: 4.9.4
@@ -256,6 +260,10 @@ packages:
       '@esbuild/win32-x64': 0.16.17
     dev: true
 
+  /fast-deep-equal/3.1.3:
+    resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
+    dev: false
+
   /fsevents/2.3.2:
     resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
@@ -390,3 +398,7 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
+
+  /xstate/4.35.2:
+    resolution: {integrity: sha512-5X7EyJv5OHHtGQwN7DsmCAbSnDs3Mxl1cXQ4PVaLwi+7p/RRapERnd1dFyHjYin+KQoLLfuXpl1dPBThgyIGNg==}
+    dev: false

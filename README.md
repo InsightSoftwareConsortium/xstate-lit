@@ -19,7 +19,14 @@ export class MyElement extends LitElement {
 }
 ```
 
-See example directory for running example.
+To run example install node_modules at top level as well as in example directory:
+
+```
+pnpm install
+cd example
+pnpm install
+pnpm run dev
+```
 
 ## SelectController
 
@@ -27,8 +34,8 @@ This Lit ReactiveController:
 
 1. Subscribes to all updates of an XState actor or service.
 1. Runs the user provided state selector function when the state changes or the actor receives an event.
-1. Triggers the Lit component to update if the compare function returns false. The default compare function is `fast-deep-equal`
+1. Triggers the Lit component to update if the compare function returns false. The default compare function is `fast-deep-equal` if it is installed, else `===` compares the old and new selected values.
 
 ## SelectState
 
-A wrapper for SelectController that pull the XState actor or service from a @lit-labs/context. This avoids needed to pass a shared actor down the component tree.
+A wrapper for SelectController that pulls the XState actor or service from a `@lit-labs/context`. This avoids needed to pass a shared actor down the component tree.
