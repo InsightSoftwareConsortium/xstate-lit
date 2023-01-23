@@ -1,10 +1,7 @@
 import { ContextConsumer } from '@lit-labs/context';
 import { ReactiveController, ReactiveElement } from 'lit';
 import { ActorRef } from 'xstate';
-import { SelectorController } from './select-controller';
-import fastDeepEqual from 'fast-deep-equal';
-
-const defaultCompare = fastDeepEqual;
+import { SelectorController, defaultCompare } from './select-controller';
 
 export class SelectState<
   T,
@@ -26,7 +23,7 @@ export class SelectState<
   private host: ReactiveElement;
 
   private selector: (emitted: TEmitted) => T;
-  compare: (a: T, b: T) => boolean = defaultCompare; // is current value same as old value?
+  compare: (a: T, b: T) => boolean; // if current value same as old value, return true
 
   constructor(
     context: TContext,
@@ -69,6 +66,7 @@ export class SelectState<
   }
 }
 
+// Factory function for SelectState
 export function connectState<
   T,
   TContext extends {

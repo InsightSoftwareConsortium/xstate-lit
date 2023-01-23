@@ -1,13 +1,22 @@
 import { ReactiveController, ReactiveControllerHost } from 'lit';
 import { ActorRef, Subscribable, Subscription } from 'xstate';
 
+// if fast-deep-equal installed, use it, else use ===
+export const defaultCompare = await (async () => {
+  try {
+    return await (
+      await import('fast-deep-equal/es6')
+    ).default;
+  } catch (e) {
+    return (a: any, b: any) => a === b;
+  }
+})();
+
 export function getSnapshot<TEmitted>(
   actorRef: ActorRef<any, TEmitted>
 ): TEmitted | undefined {
   return actorRef.getSnapshot();
 }
-
-const defaultCompare = (a: any, b: any) => a === b;
 
 export class SelectorController<
   TActor extends ActorRef<any, any>,
