@@ -1,5 +1,6 @@
 import { LitElement, css, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import { styleMap } from 'lit/directives/style-map.js';
 import { assign, createMachine, interpret } from 'xstate';
 import { SelectorController } from '../../src/select-controller';
 
@@ -13,10 +14,11 @@ const toggleMachine = createMachine<ToggleContext, ToggleEvents>({
   id: 'toggle',
   initial: 'inactive',
   context: {
-    count: 0,
+    count: -1,
   },
   states: {
     inactive: {
+      entry: assign({ count: (ctx) => ctx.count + 1 }),
       on: { TOGGLE: 'active' },
     },
     active: {
@@ -33,11 +35,18 @@ const actor = interpret(toggleMachine).start();
 export class MyElement extends LitElement {
   count = new SelectorController(this, actor, (state) => state.context.count);
 
+  isActive = new SelectorController(
+    this,
+    actor,
+    (state) => state.value === 'active'
+  );
+
   render() {
+    const styles = { color: this.isActive.value ? 'green' : 'gray' };
     return html`
       <slot></slot>
       <div class="card">
-        <button @click=${this._onClick} part="button">
+        <button @click=${this._onClick} part="button" style=${styleMap(styles)}>
           count is ${this.count.value}
         </button>
       </div>
