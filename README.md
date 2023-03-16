@@ -34,7 +34,7 @@ This Lit ReactiveController:
 
 1. Subscribes to all updates of an XState actor or service.
 1. Runs the user provided state selector function when the state changes or the actor receives an event.
-1. Triggers the Lit component to update if the compare function returns false. The default compare function is `fast-deep-equal` if it is installed, else `===` compares the old and new selected values.
+1. Triggers the Lit component to update if the compare function returns false. The default compare function uses `===` to check equality of the old and new selected values.
 
 ## SelectState
 
