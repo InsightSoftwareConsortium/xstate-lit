@@ -1,22 +1,34 @@
 import { ReactiveController, ReactiveControllerHost } from 'lit';
-import { ActorRef, Subscribable, Subscription } from 'xstate';
+import { ActorRef, Interpreter, Subscribable, Subscription } from 'xstate';
 
-// if fast-deep-equal installed, use it, else use ===
-export const defaultCompare = await (async () => {
-  try {
-    return await (
-      await import('fast-deep-equal/es6')
-    ).default;
-  } catch (e) {
-    return (a: any, b: any) => a === b;
-  }
-})();
+export const defaultCompare = (a: any, b: any) => a === b;
 
-export function getSnapshot<TEmitted>(
-  actorRef: ActorRef<any, TEmitted>
-): TEmitted | undefined {
-  return actorRef.getSnapshot();
+export function isService(
+  actor: any
+): actor is Interpreter<any, any, any, any> {
+  return 'state' in actor && 'machine' in actor;
 }
+
+export function isActorWithState<T extends ActorRef<any>>(
+  actorRef: T
+): actorRef is T & { state: any } {
+  return 'state' in actorRef;
+}
+
+export function getServiceSnapshot<
+  TService extends Interpreter<any, any, any, any>
+>(service: TService): TService['state'] {
+  return service.status !== 0
+    ? service.getSnapshot()
+    : service.machine.initialState;
+}
+
+export const getSnapshot = (actorRef: ActorRef<any>) => {
+  if (isService(actorRef)) {
+    return getServiceSnapshot(actorRef);
+  }
+  return isActorWithState(actorRef) ? actorRef.state : undefined;
+};
 
 export class SelectorController<
   TActor extends ActorRef<any, any>,
