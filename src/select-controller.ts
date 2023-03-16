@@ -23,12 +23,12 @@ export function getServiceSnapshot<
     : service.machine.initialState;
 }
 
-export const getSnapshot = (actorRef: ActorRef<any>) => {
+export function getSnapshot(actorRef: ActorRef<any>) {
   if (isService(actorRef)) {
     return getServiceSnapshot(actorRef);
   }
   return isActorWithState(actorRef) ? actorRef.state : undefined;
-};
+}
 
 export class SelectorController<
   TActor extends ActorRef<any, any>,
