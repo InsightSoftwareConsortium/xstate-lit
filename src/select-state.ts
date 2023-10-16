@@ -5,7 +5,7 @@ import { SelectorController, defaultCompare } from './select-controller.js';
 
 export class SelectState<
   T,
-  TActor extends ActorRef<any, TEmitted>,
+  TActor extends ActorRef<any, any>,
   TContext extends {
     __context__: { service: ActorRef<any, any> };
   },
