@@ -1,16 +1,10 @@
 import { LitElement, css, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
-import { assign, createMachine, interpret } from 'xstate';
+import { assign, createMachine, createActor } from 'xstate';
 import { SelectorController } from '../../src/select-controller';
 
-interface ToggleContext {
-  count: number;
-}
-
-type ToggleEvents = { type: 'TOGGLE' };
-
-const toggleMachine = createMachine<ToggleContext, ToggleEvents>({
+const toggleMachine = createMachine({
   id: 'toggle',
   initial: 'inactive',
   context: {
@@ -18,22 +12,23 @@ const toggleMachine = createMachine<ToggleContext, ToggleEvents>({
   },
   states: {
     inactive: {
-      entry: assign({ count: (ctx) => ctx.count + 1 }),
+      entry: assign({ count: ({ context }) => context.count + 1 }),
       on: { TOGGLE: 'active' },
     },
     active: {
-      entry: assign({ count: (ctx) => ctx.count + 1 }),
+      entry: assign({ count: ({ context }) => context.count + 1 }),
       on: { TOGGLE: 'inactive' },
     },
   },
-  predictableActionArguments: true,
 });
 
-const actor = interpret(toggleMachine).start();
+const actor = createActor(toggleMachine).start();
 
 @customElement('my-element')
 export class MyElement extends LitElement {
-  count = new SelectorController(this, actor, (state) => state.context.count);
+  count = new SelectorController(this, actor, (state) => {
+    return state.context.count;
+  });
 
   isActive = new SelectorController(
     this,
@@ -54,7 +49,7 @@ export class MyElement extends LitElement {
   }
 
   private _onClick() {
-    actor.send('TOGGLE');
+    actor.send({ type: 'TOGGLE' });
   }
 
   static styles = css`
