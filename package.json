@@ -16,15 +16,15 @@
     ]
   },
   "devDependencies": {
-    "@lit-labs/context": "^0.2.0",
-    "lit": "^2.6.0",
-    "semantic-release": "^20.0.2",
+    "@lit-labs/context": "^0.5.0",
+    "lit": "^3.0.0",
+    "semantic-release": "^22.0.5",
     "typescript": "^5.2.2",
     "xstate": "^5.0.0-beta.34"
   },
   "peerDependencies": {
-    "@lit-labs/context": "^0.2.0",
-    "lit": "^2.6.0",
+    "@lit-labs/context": "^0.5.0",
+    "lit": "^3.0.0",
     "xstate": "^5.0.0-beta.34"
   },
   "peerDependenciesMeta": {
