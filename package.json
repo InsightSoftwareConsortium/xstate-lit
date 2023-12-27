@@ -3,8 +3,6 @@
   "version": "0.0.0-development",
   "description": "",
   "type": "module",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -12,9 +10,6 @@
       "default": "./dist/index.js"
     }
   },
-  "files": [
-    "dist/**/*"
-  ],
   "scripts": {
     "build": "tsc"
   },
@@ -26,19 +21,19 @@
     ]
   },
   "devDependencies": {
-    "@lit-labs/context": "^0.5.0",
-    "lit": "^3.0.0",
-    "semantic-release": "^22.0.5",
-    "typescript": "^5.2.2",
-    "xstate": "^5.0.0-beta.34"
+    "@lit/context": "^1.1.0",
+    "lit": "^3.1.0",
+    "semantic-release": "^22.0.12",
+    "typescript": "^5.3.3",
+    "xstate": "^5.4.1"
   },
   "peerDependencies": {
-    "@lit-labs/context": "^0.5.0",
-    "lit": "^3.0.0",
-    "xstate": "^5.0.0-beta.34"
+    "@lit/context": "^1.1.0",
+    "lit": "^3.1.0",
+    "xstate": "^5.4.1"
   },
   "peerDependenciesMeta": {
-    "@lit-labs/context": {
+    "@lit/context": {
       "optional": true
     }
   },

@@ -1,2 +1,2 @@
-export * from './select-controller'
-export * from './select-state'
+export * from './select-controller.js';
+export * from './select-state.js';

@@ -1,4 +1,4 @@
-import { ContextConsumer } from '@lit-labs/context';
+import { ContextConsumer } from '@lit/context';
 import { ReactiveController, ReactiveElement } from 'lit';
 import { ActorRef } from 'xstate';
 import { SelectorController, defaultCompare } from './select-controller.js';
@@ -32,12 +32,10 @@ export class SelectState<
     compare: (a: T, b: T) => boolean = defaultCompare
   ) {
     (this.host = host).addController(this);
-    this.serviceContext = new ContextConsumer(
-      this.host,
+    this.serviceContext = new ContextConsumer(this.host, {
       context,
-      undefined,
-      true
-    );
+      subscribe: true,
+    });
     this.selector = selector;
     this.compare = compare;
   }
