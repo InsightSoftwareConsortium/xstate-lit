@@ -1,7 +1,7 @@
 import { ContextConsumer } from '@lit/context';
 import { ReactiveController, ReactiveElement } from 'lit';
 import { ActorRef } from 'xstate';
-import { SelectorController, defaultCompare } from './select-controller.js';
+import { SelectorController, defaultCompare } from './selector-controller.js';
 
 export class SelectState<
   T,
