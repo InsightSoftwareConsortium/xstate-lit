@@ -28,7 +28,7 @@ pnpm install
 pnpm run dev
 ```
 
-## SelectController
+## SelecterController
 
 This Lit ReactiveController:
 
@@ -38,4 +38,4 @@ This Lit ReactiveController:
 
 ## SelectState
 
-A wrapper for SelectController that pulls the XState actor or service from a `@lit/context`. This avoids needed to pass a shared actor down the component tree.
+A wrapper for SelecterController that pulls the XState actor or service from a `@lit/context`. This avoids needed to pass a shared actor down the component tree.
