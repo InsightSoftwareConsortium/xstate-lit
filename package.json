@@ -38,11 +38,6 @@
     "lit": "^3.1.0",
     "xstate": "^5.4.1"
   },
-  "peerDependenciesMeta": {
-    "@lit/context": {
-      "optional": true
-    }
-  },
   "prettier": {
     "tabWidth": 2,
     "singleQuote": true
